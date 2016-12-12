@@ -41,7 +41,7 @@ public class ajouterCommentaire {
     public ajouterCommentaire() {
     }
     
-    public void soumettreCommentaire(Restaurant pResto) {
+    public String soumettreCommentaire(Restaurant pResto) {
           
         FacesContext facesContext = FacesContext.getCurrentInstance();          
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
@@ -49,6 +49,7 @@ public class ajouterCommentaire {
         this.restaurant = pResto;
         Date today = new Date();
         this.datecreation = today;
+        
         
         Transaction tx = null;
         Session nsession = null;
@@ -60,6 +61,7 @@ public class ajouterCommentaire {
             unComm.setDatecreation(today);
             unComm.setMembre(this.membre);
             unComm.setRestaurant(this.restaurant);
+            unComm.setNote(this.note);
             
            /* SMembre.setEmail(email);
             SMembre.setMpd(Mdp);
@@ -73,13 +75,16 @@ public class ajouterCommentaire {
             tx = nsession.beginTransaction();			           
             nsession.saveOrUpdate(unComm);
             tx.commit();
+            nsession.close(); 
+            return "ficheRestaurant?faces-redirect=true";
         }
         catch(Exception e)
         {
             tx.rollback();
             e.printStackTrace();
         }      
-        nsession.close();   
+        nsession.close(); 
+        return null;
     }
 
     /**

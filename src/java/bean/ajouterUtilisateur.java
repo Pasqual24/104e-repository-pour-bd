@@ -97,6 +97,7 @@ public class ajouterUtilisateur {
           /*if (unMem.getTypemembre() == "")
           session.setAttributes("estUnAdmin", unMem.)
           return "index";*/
+          return "index?faces-redirect=true";
         }
         return null;
     }

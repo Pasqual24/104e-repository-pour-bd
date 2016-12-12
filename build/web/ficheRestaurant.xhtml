@@ -23,22 +23,18 @@
                 <br /> <br />
                 <h:outputText value="Note moyenne des membres: #{afficherDetailsRestaurant.noteMoyenne(resto.idresto)}"></h:outputText>
               
-                <div>   
+                <div rendered="#{sessionScope.nomutil!=null}">   
                     <h3>Laisser un commentaire</h3>   
                     <h:form>
                         <h4>Note</h4>
-                        <h:selectOneMenu>
-                            <f:selectItem itemValue="2" itemLabel="5  /5" />
-                            <f:selectItem itemValue="2" itemLabel="4.5/5" />
-                            <f:selectItem itemValue="2" itemLabel="4  /5" />
-                            <f:selectItem itemValue="2" itemLabel="3.5/5" />
-                            <f:selectItem itemValue="2" itemLabel="3  /5" />
-                            <f:selectItem itemValue="2" itemLabel="2.5/5" />
-                            <f:selectItem itemValue="2" itemLabel="2  /5" />
-                            <f:selectItem itemValue="2" itemLabel="1.5/5" />
-                            <f:selectItem itemValue="2" itemLabel="1  /5" />
-                            <f:selectItem itemValue="1" itemLabel="0.5/5" />
+                        <h:selectOneMenu value="#{ajouterCommentaire.note}">
+                                <f:selectItem itemValue="1" itemLabel="1" />
+                                <f:selectItem itemValue="2" itemLabel="2" />
+                                <f:selectItem itemValue="3" itemLabel="3" />
+                                <f:selectItem itemValue="4" itemLabel="4" />
+                                <f:selectItem itemValue="5" itemLabel="5" />
                         </h:selectOneMenu>
+                        
                         <h4>Laisser un commentaire (optionnel)</h4>
                         <h:inputText maxlength="255" size="80"  value="#{ajouterCommentaire.contenu}"></h:inputText>
                         <br />
@@ -46,14 +42,19 @@
                     </h:form>
                 </div>
                 
-                <ui:repeat value="#{afficherDetailsRestaurant.afficherCommentaires()}" var="commentaire">
-                     <tr>
-                         <td>#{commentaire.membre}</td>
-                         <td>#{commentaire.note}</td>
-                         <td>#{commentaire.datecreation}</td>
-                         <td>#{commentaire.contenu}</td>
-                     </tr>
-                 </ui:repeat>
+                <div>
+                    <ui:repeat value="#{afficherDetailsRestaurant.afficherCommentaires()}" var="commentaire">
+                         <tr>
+                             <td>Publié par #{commentaire.membre.nomutil} le #{commentaire.datecreation}</td>
+                             <br />
+                             <td>Note donnée au restaurant: #{commentaire.note} /5</td>
+                             <br />
+                             <td>Commentaire: #{commentaire.contenu}</td>
+                             <br />
+                             <br />
+                         </tr>
+                     </ui:repeat>
+                 </div>
                 <br />
             </ui:define>
         </ui:composition>
